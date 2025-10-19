@@ -7,6 +7,11 @@ use App\Models\Buku;
 
 class BukuController extends Controller
 {
+    public function __construct()
+    {
+        $this -> middleware('auth') -> except('index');
+    }
+
     public function index(){
         $buku = Buku::all();
         return view('DaftarBuku',compact('buku'));
@@ -43,5 +48,14 @@ class BukuController extends Controller
     public function destroy(Buku $buku){
         $buku->delete();
         return redirect()->route('buku.index')->with('success','Buku berhasil dihapus');
+    }
+
+    public function show(Buku $buku){
+        return view('DetailBuku', compact('buku'));
+    }
+
+    public function pinjam($id){
+        $buku = Buku::findOrFail($id);
+        return view('FormPinjam', compact('buku'));
     }
 }

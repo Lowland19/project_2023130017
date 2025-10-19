@@ -11,11 +11,19 @@ class Pinjaman extends Model
 
     protected $fillable = [
         'idBuku',
-        'namaPeminjam',
+        'idPeminjam',
         'durasiPinjam',
         'tanggalAwalPinjam',
         'tanggalPengembalian'
     ];
 
     protected $table = 'pinjaman';
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function buku(){
+        return $this->hasOne(Buku::class,'id','idBuku');
+    }
 }

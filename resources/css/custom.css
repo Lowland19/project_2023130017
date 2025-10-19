@@ -1,0 +1,64 @@
+i.bi {
+    font-style: normal !important;
+}
+
+.nav-link {
+    position: relative;
+    transition: color 0.3s;
+    color: rgb(0, 0, 0);
+    /* warna teks default */
+    transition: 0.3s ease;
+    /* animasi halus */
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0%;
+    height: 2px;
+    transition: width 0.3s ease;
+    background-color: #000000;
+    /* warna hover sedikit lebih gelap */
+    color: #000000;
+    /* tetap terbaca jelas */
+    border-radius: 5px;
+    /* opsional: biar agak tumpul */
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.tab-content,
+.tab-pane,
+.card,
+.row {
+    width: 100% !important;
+}
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    min-height: 250px;
+}
+
+@media (max-width: 576px) {
+    .chart-container {
+        min-height: 200px;
+    }
+}
+
+.nav-tabs {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+/* Saat layar kecil (misal ≤ 768px) — aktifkan scroll horizontal */
+@media (max-width: 768px) {
+  .nav-tabs {
+    overflow-x: auto;
+  }
+}

@@ -19,4 +19,8 @@ class Buku extends Model
         'penerbit',
         'statusTersedia'
     ];
+
+    public function pinjaman(){
+        return $this->belongsTo(Pinjaman::class,'id','idBuku');
+    }
 }
