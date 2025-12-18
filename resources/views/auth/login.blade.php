@@ -18,9 +18,9 @@
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                                 @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                         </div>
@@ -32,9 +32,9 @@
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
                                 @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                         </div>
@@ -51,16 +51,40 @@
                             </div>
                         </div>
 
-                        <div class="row mb-0">
+                        <div class="row mb-3">
+                            <label class="col-md-4 col-form-label text-md-end">Captcha</label>
+
+                            <div class="col-md-6">
+                                <div class="d-flex align-item-center gap-2">
+                                    <span id="captcha-image">{!! captcha_img('math') !!}</span>
+
+                                    <button type="button" class="btn btn-secondary" id="reload">
+                                    Refresh
+                                </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row-mb-3">
+                            <div class="col-md-4 offset-md-4">
+                                <input type="text" name="captcha" class="form-control mt-2" placeholder="Enter Captcha">
+                            </div>
+
+                            <div class="col-md-8 offset-md-4">
+                                
+                            </div>
+                        </div>
+
+                        <div class="row mb-0 mt-3">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
 
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
+                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    {{ __('Forgot Your Password?') }}
+                                </a>
                                 @endif
                             </div>
                         </div>
@@ -70,4 +94,15 @@
         </div>
     </div>
 </div>
+
+<script>
+document.getElementById('reload').addEventListener('click', function () {
+    fetch('/reload-captcha')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('captcha-image').innerHTML = data.captcha;
+        })
+        .catch(error => console.error('Gagal memuat captcha:', error));
+});
+</script>
 @endsection

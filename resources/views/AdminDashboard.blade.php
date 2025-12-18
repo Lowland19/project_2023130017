@@ -7,6 +7,8 @@
             <button class="nav-link active" data-bs-target="#dashboard-panel" data-bs-toggle="tab">Dashboard</button>
             <button class="nav-link" data-bs-target="#user-list" data-bs-toggle="tab">Daftar Pengguna</button>
             <button class="nav-link" data-bs-target="#user-registration" data-bs-toggle="tab">Registrasi Pengguna</button>
+            <button class="nav-link" data-bs-target="#daftar-buku-admin" data-bs-toggle="tab">Daftar Buku</button>
+            <button class="nav-link" data-bs-target="#perizinan" data-bs-toggle="tab">Perizinan</button>
         </ul>
         <div class="tab-content mt-3">
             <div class="tab-pane fade show active" id="dashboard-panel" role="tabpanel">
@@ -60,90 +62,21 @@
                                 <th>Nama Lengkap</th>
                                 <th>Email</th>
                                 <th>Hak Akses</th>
-                                <th>Status Akun</th>
-                                <th>Tanggal Daftar</th>
-                                <th>Terakhir Login</th>
+                                <th>Alamat</th>
+                                <th>Nomor Telepon</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @php
-                            $users = [
-                            [
-                            'id' => 1,
-                            'nama' => 'Nickolas Darmawan',
-                            'email' => 'nickolas.darmawan11@gmail.com',
-                            'role' => 'Admin',
-                            'status' => 'Aktif',
-                            'tanggal_daftar' => '2025-02-01',
-                            'terakhir_login' => '2025-10-15 09:42'
-                            ],
-                            [
-                            'id' => 2,
-                            'nama' => 'Budi Santoso',
-                            'email' => 'budi.santoso@example.com',
-                            'role' => 'Admin',
-                            'status' => 'Aktif',
-                            'tanggal_daftar' => '2025-02-01',
-                            'terakhir_login' => '2025-10-15 09:42'
-                            ],
-                            [
-                            'id' => 3,
-                            'nama' => 'Siti Rahmawati',
-                            'email' => 'siti.rahmawati@example.com',
-                            'role' => 'Petugas',
-                            'status' => 'Aktif',
-                            'tanggal_daftar' => '2025-04-20',
-                            'terakhir_login' => '2025-10-14 15:10'
-                            ],
-                            [
-                            'id' => 4,
-                            'nama' => 'Andi Pratama',
-                            'email' => 'andi.pratama@example.com',
-                            'role' => 'Member',
-                            'status' => 'Nonaktif',
-                            'tanggal_daftar' => '2025-07-05',
-                            'terakhir_login' => '2025-08-10 11:20'
-                            ],
-                            [
-                            'id' => 5,
-                            'nama' => 'Dewi Lestari',
-                            'email' => 'dewi.lestari@example.com',
-                            'role' => 'Member',
-                            'status' => 'Aktif',
-                            'tanggal_daftar' => '2025-09-10',
-                            'terakhir_login' => '2025-10-16 07:35'
-                            ],
-                            ];
-                            @endphp
-
-                            @foreach ($users as $user)
+                            @foreach ($user as $users)
                             <tr>
-                                <td>{{ $user['id'] }}</td>
-                                <td>{{ $user['nama'] }}</td>
-                                <td>{{ $user['email'] }}</td>
-                                <td>
-                                    <span class="badge 
-              @if($user['role'] === 'Admin') bg-danger 
-              @elseif($user['role'] === 'Petugas') bg-primary 
-              @else bg-secondary @endif">
-                                        {{ $user['role'] }}
-                                    </span>
-                                </td>
-                                <td>
-                                    @if($user['status'] === 'Aktif')
-                                    <span class="badge bg-success">Aktif</span>
-                                    @else
-                                    <span class="badge bg-secondary">Nonaktif</span>
-                                    @endif
-                                </td>
-                                <td>{{ \Carbon\Carbon::parse($user['tanggal_daftar'])->format('d M Y') }}</td>
-                                <td>{{ \Carbon\Carbon::parse($user['terakhir_login'])->format('d M Y H:i') }}</td>
-                                <td>
-                                    <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Pilih Aksi
-                                    </button>
-                                </td>
+                                <td>{{$users->id}}</td>
+                                <td>{{$users->name}}</td>
+                                <td>{{$users->email}}</td>
+                                <td>{{$users->role}}</td>
+                                <td>{{$users->alamat}}</td>
+                                <td>{{$users->nomortelepon}}</td>
+                                <td>Aksi</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -151,22 +84,142 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="user-registration">
-                <div class="mb-3">
-                    <label for="nama" class="form-label fw-bolder mb-0">Nama Pengguna</label>
-                    <input type="text" name="nama" id="nama" class="form-control" required>
+                <form method="POST" action="{{route('admin.store')}}">
+                    @csrf
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label for="name" class="form-label fw-bolder mb-0">Nama Pengguna</label>
+                            <input type="text" name="name" id="name" class="form-control" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="email" class="form-label fw-bolder mb-0">Email Pengguna</label>
+                            <input type="text" name="email" id="email" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-4">
+                            <label for="password" class="form-label fw-bolder mb-0">Password</label>
+                            <input type="password" name="password" id="password" class="form-control" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="alamat" class="form-label fw-bolder mb-0">Alamat</label>
+                            <input type="text" name="alamat" id="alamat" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-3">
+                            <label for="nomortelepon" class="form-label fw-bolder mb-0">Nomor Telepon</label>
+                            <input type="text" name="nomortelepon" id="nomortelepon" class="form-control" required>
+                        </div>
+                        <div class="col-3">
+                            <label for="role" class="form-label fw-bolder mb-0">Role</label>
+                            <select class="form-select" id="role" name="role">
+                                <option selected disabled>Pilih role pengguna</option>
+                                <option value="pengguna">Pengguna</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                        <div class="col-4 d-flex align-items-end">
+                            <button type="submit" class="btn btn-success fw-bolder mb-0">Daftarkan Pengguna</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="daftar-buku-admin">
+                <div class="table-responsive rounded-3 mb-3">
+                    <table class="table table-hover align-middle m-0" style="--bs-table-bg: #FFEDB8;">
+                        <thead>
+                            <tr class="border-bottom" style="--bs-border-color: #A37A00; --bs-border-width: 3px ">
+                                <th>No</th>
+                                <th>Judul Buku</th>
+                                <th>Penulis</th>
+                                <th>Penerbit</th>
+                                <th>Tahun Terbit</th>
+                                <th>Kategori</th>
+                                <th>ISBN</th>
+                                <th>Status Tersedia</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($buku as $Buku)
+                            <tr class="border-bottom" style="--bs-border-color: #A37A00;">
+                                <td>{{$Buku -> id}}</td>
+                                <td>{{$Buku -> namaBuku}}</td>
+                                <td>{{$Buku -> penulis}}</td>
+                                <td>{{$Buku -> penerbit}}</td>
+                                <td>{{ $Buku -> tahun_terbit }}</td>
+                                <td>{{ $Buku -> kategori }}</td>
+                                <td>{{ $Buku -> isbn }}</td>
+                                @if($Buku -> statusTersedia == 1)
+                                <td class="table-success" style="border-color: #A37A00; ">
+                                    <p>Tersedia</p>
+                                </td>
+                                @else
+                                <td class="table-danger" style="border-color: #A37A00; ">
+                                    <p>Tidak Tersedia</p>
+                                </td>
+                                @endif
+                                <td>
+                                    <div class="d-inline-flex gap-2 justify-content-end">
+                                        @auth
+
+                                        <div class="dropdown">
+                                            <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Pilih Aksi
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <li>
+                                                    @if($Buku -> statusTersedia == 1)
+                                                    <a href="{{ route('buku.pinjam', $Buku->id) }}" class="btn btn-primary dropdown-item">Pinjam</a>
+                                                    @else
+
+                                                    @endif
+                                                </li>
+                                                <li><a class="dropdown-item" href="{{route('buku.edit',$Buku->id)}}"><i class="bi bi-pencil-square me-2"></i>Edit</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="bi bi-trash-fill me-2"></i>Hapus</a></li>
+                                            </ul>
+                                        </div>
+                                        @endauth
+                                    </div>
+
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-end mt-3">
+                        <a href="{{route('buku.create')}}" class="btn btn-primary mb-3 ms-5 justify-content-end me-2"><i class="bi bi-plus me-2"></i>Tambah Buku</a>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label fw-bolder mb-0">Email Pengguna</label>
-                    <input type="text" name="email" id="email" class="form-control" required>
+
+            </div>
+            <div class="tab-pane fade" id="perizinan">
+                <p>Test</p>
+                <div class="table-responsive rounded-3 mb-3">
+                    <table class="table table-hover align-middle m-0" style="--bs-table-bg: #FFEDB8;">
+                        <thead class="border-bottom" style="--bs-border-color: #A37A00; --bs-border-width: 3px ">
+                            <tr>
+                                <th>Role</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($roles as $r)
+                            <tr>
+                                <td>{{ $r->name }}</td>
+                                <td>
+                                    <a href="{{ route('role.edit',$r->id) }}" class="btn btn-primary">Ubah Role</a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-                <div class="mb-3">
-                    <label for="Password" class="form-label fw-bolder mb-0">Password</label>
-                    <input type="text" name="Password" id="Password" class="form-control" required>
-                </div>
-                <button type="submit" class="btn btn-success fw-bolder mb-0">Daftarkan Pengguna</button>
             </div>
         </div>
     </div>
+</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>

@@ -26,6 +26,7 @@ class BukuController extends Controller
             'namaBuku' => 'required',
             'penulis' => 'required',
             'penerbit' => 'required',
+            ''
         ]);
         Buku::create($request->all());
         return redirect()->route('buku.index')->with('success','Buku berhasil ditambahkan');

@@ -40,20 +40,21 @@
 
                         @auth
                         <li class="nav-item">
-                            <a class="nav-link link-dark link-underline-opacity-0 link-underline-opacity-100-hover" href="pinjaman">
-                                Daftar Pinjaman buku
+                            <a class="nav-link link-dark link-underline-opacity-0 link-underline-opacity-100-hover" href="{{route('pinjaman.dashboard')}}">
+                                <i class="bi bi-book"></i> Daftar Pinjaman
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link link-dark link-underline-opacity-0 link-underline-opacity-100-hover" href="/riwayatPeminjaman">
-                                Riwayat
+                            <a class="nav-link link-dark link-underline-opacity-0 link-underline-opacity-100-hover" href="{{ route('pengembalian.index') }}">
+                               <i class="bi bi-clock-history"></i> Riwayat
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link link-dark link-underline-opacity-0 link-underline-opacity-100-hover" href="/dashboard">
+                            <li class="nav-item">
+                            <a class="nav-link link-dark link-underline-opacity-0 link-underline-opacity-100-hover" href="{{route('admin.dashboard')}}">
                                 Admin
                             </a>
                         </li>
+                        
                         @endauth
                     </ul>
 

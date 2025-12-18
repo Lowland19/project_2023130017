@@ -17,10 +17,13 @@ class Buku extends Model
         'namaBuku',
         'penulis',
         'penerbit',
-        'statusTersedia'
+        'statusTersedia',
+        'tahun_terbit',
+        'kategori',
+        'isbn'
     ];
 
     public function pinjaman(){
-        return $this->belongsTo(Pinjaman::class,'id','idBuku');
+        return $this->hasOne(Pengembalian::class);
     }
 }

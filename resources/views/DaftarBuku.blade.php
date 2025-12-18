@@ -22,6 +22,9 @@
                             <th>Judul Buku</th>
                             <th>Penulis</th>
                             <th>Penerbit</th>
+                            <th>Tahun Terbit</th>
+                            <th>Kategori</th>
+                            <th>ISBN</th>
                             <th>Status Tersedia</th>
                             <th>Aksi</th>
                         </tr>
@@ -33,6 +36,9 @@
                             <td>{{$Buku -> namaBuku}}</td>
                             <td>{{$Buku -> penulis}}</td>
                             <td>{{$Buku -> penerbit}}</td>
+                            <td>{{ $Buku -> tahun_terbit }}</td>
+                            <td>{{ $Buku -> kategori }}</td>
+                            <td>{{ $Buku -> isbn }}</td>
                             @if($Buku -> statusTersedia == 1)
                             <td class="table-success" style="border-color: #A37A00; ">
                                 <p>Tersedia</p>
@@ -46,22 +52,9 @@
                                 <div class="d-inline-flex gap-2 justify-content-end">
                                     @auth
 
-                                    <div class="dropdown">
-                                        <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Pilih Aksi
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <li>
-                                                @if($Buku -> statusTersedia == 1)
-                                                <a href="{{ route('buku.pinjam', $Buku->id) }}" class="btn btn-primary dropdown-item">Pinjam</a>
-                                                @else
-
-                                                @endif
-                                            </li>
-                                            <li><a class="dropdown-item" href="{{route('buku.edit',$Buku->id)}}"><i class="bi bi-pencil-square me-2"></i>Edit</a></li>
-                                            <li><a class="dropdown-item" href="#"><i class="bi bi-trash-fill me-2"></i>Hapus</a></li>
-                                        </ul>
-                                    </div>
+                                    <a class="btn btn-warning" type="button" href="{{ route('buku.pinjam',$Buku->id) }}">
+                                        Pinjam Buku
+                                    </a>
                                     @endauth
                                 </div>
 
@@ -85,28 +78,20 @@
                             <div class="mb-3">
                                 <p class="card-text m-0 p-0">Penulis: {{$Buku->penulis}}</p>
                                 <p class="card-text m-0 p-0">Penerbit: {{$Buku->penerbit}}</p>
+                                <p class="card-text m-0 p-0">Tahun Terbit: {{$Buku->tahun_terbit}}</p>
+                                <p class="card-text m-0 p-0">Kategori: {{$Buku->kategori}}</p>
+                                <p class="card-text m-0 p-0">ISBN: {{$Buku->isbn}}</p>
                                 <p class="card-text m-0 p-0">Status: @if($Buku -> statusTersedia == 1)
                                     Tersedia <i class="bi bi-check-square"></i></i>
                                     @else
                                     Tidak Tersedia <i class="bi bi-x-square"></i>
                                     @endif</p>
                             </div>
-                            <div class="dropdown ms-auto mt-auto">
-                                <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Pilih Aksi
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li>
-                                        @if($Buku -> statusTersedia == 1)
-                                        <a href="{{ route('buku.pinjam', $Buku->id) }}" class="btn btn-primary dropdown-item">Pinjam</a>
-                                        @else
 
-                                        @endif
-                                    </li>
-                                    <li><a class="dropdown-item" href="{{route('buku.edit',$Buku->id)}}"><i class="bi bi-pencil-square me-2"></i>Edit</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-trash-fill me-2"></i>Hapus</a></li>
-                                </ul>
-                            </div>
+                            <button class="btn btn-warning" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                Pinjam Buku
+                            </button>
+
                         </div>
                     </div>
                 </div>
@@ -115,45 +100,38 @@
 
         </div>
     </div>
-
-    @auth
-    <div class="d-flex justify-content-end mt-3">
-        <a href="{{route('buku.create')}}" class="btn btn-primary mb-3 ms-5 justify-content-end me-2"><i class="bi bi-plus me-2"></i>Tambah Buku</a>
-    </div>
-
-    @endauth
 </div>
 </div>
 
 
 <script>
-// document.addEventListener("DOMContentLoaded", function() {
-//     // Deteksi ukuran layar
-//     if (window.innerWidth < 768) { // < 768px = layar HP (Bootstrap breakpoint "md")
-//         // Ambil elemen tab Card
-//         const cardTab = document.querySelector('#cardtab');
-//         const cardPane = document.querySelector('#card');
+    // document.addEventListener("DOMContentLoaded", function() {
+    //     // Deteksi ukuran layar
+    //     if (window.innerWidth < 768) { // < 768px = layar HP (Bootstrap breakpoint "md")
+    //         // Ambil elemen tab Card
+    //         const cardTab = document.querySelector('#cardtab');
+    //         const cardPane = document.querySelector('#card');
 
-//         const tableTab = document.querySelector('#tabletab');
-//         const tablePane = document.querySelector('#table');
+    //         const tableTab = document.querySelector('#tabletab');
+    //         const tablePane = document.querySelector('#table');
 
-//         // Nonaktifkan tab tabel
-//         tableTab.classList.remove('active');
-//         tablePane.classList.remove('show', 'active');
+    //         // Nonaktifkan tab tabel
+    //         tableTab.classList.remove('active');
+    //         tablePane.classList.remove('show', 'active');
 
-//         // Aktifkan tab card
-//         cardTab.classList.add('active');
-//         cardPane.classList.add('show', 'active');
-//     }
-// });
+    //         // Aktifkan tab card
+    //         cardTab.classList.add('active');
+    //         cardPane.classList.add('show', 'active');
+    //     }
+    // });
 
-window.addEventListener('resize', function() {
-    if (window.innerWidth < 768) {
-        document.querySelector('#cardtab').click();
-    } else {
-        document.querySelector('#tabletab').click();
-    }
-});
+    window.addEventListener('resize', function() {
+        if (window.innerWidth < 768) {
+            document.querySelector('#cardtab').click();
+        } else {
+            document.querySelector('#tabletab').click();
+        }
+    });
 </script>
 
 @endsection

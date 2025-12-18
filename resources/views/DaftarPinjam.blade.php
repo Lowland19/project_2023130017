@@ -21,7 +21,7 @@
                     <td> {{date('d/m/Y', strtotime($data->tanggalAwalPinjam))}}</td>
                     <td> {{date('d/m/Y', strtotime($data->tanggalPengembalian))}}</td>
                     <td>
-                        <a class="btn btn-primary" href="#">Kembalikan</a>
+                        <a class="btn btn-primary" href="{{ route('buku.pinjam', $data->buku->id) }}">Kembalikan</a>
                     </td>
                 </tr>
                 @endforeach
