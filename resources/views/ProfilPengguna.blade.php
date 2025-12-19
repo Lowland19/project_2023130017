@@ -1,44 +1,85 @@
 @extends('layouts.app')
 
 @section('content')
-<div>
-    <div class="container-fluid">
-        <div class="container">
-            <div class="d-flex align-items-start mt-4" id="v-tab-profil">
-                <div class="nav flex-column nav-pills me-5" role="tablist">
-                    <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#profilpengguna">Profil Pengguna</button>
-                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#riwayatpengguna">Riwayat Pengguna</button>
-                </div>
-                <div class="tab-content">
-                    <div class="tab-pane fade show active" id="profilpengguna" role="tabpanel" ;>
-                        <div class="container-fluid rounded-3 p-5" style="background-color: #FFEDB8;">
-                            <div class="row">
-                                <div class="col" style="width: 900px">
-                                    <h1 class="text-center fw-bolder mb-3" style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Profil Pengguna</h1>
-                                    <div class="mb-3">
-                                        <label class="form-label">Nama Pengguna</label>
-                                        <input class="form-control">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Email</label>
-                                        <input class="form-control">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Password Baru (Opsional)</label>
-                                        <input class="form-control">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Konfirmasi Password Baru</label>
-                                        <input class="form-control">
-                                    </div>
-                                    <button class="btn btn-primary">Ubah</button>
-                                </div>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        {{-- Mengatur lebar kolom agar tidak terlalu lebar (col-md-8) --}}
+        <div class="col-md-8 col-lg-6">
+            
+            {{-- Card dengan background kuning sesuai request sebelumnya --}}
+            <div class="card border-0 shadow-lg rounded-4" style="background-color: #FFEDB8;">
+                <div class="card-body p-5">
+                    
+                    {{-- Judul --}}
+                    <div class="text-center mb-4">
+                        <div class="bg-white d-inline-block p-3 rounded-circle shadow-sm mb-3">
+                            <i class="bi bi-person-circle fs-1 text-warning"></i>
+                        </div>
+                        <h2 class="fw-bolder" style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                            Profil Pengguna
+                        </h2>
+                    </div>
+
+                    {{-- Form Mulai --}}
+                    {{-- Pastikan route action disesuaikan dengan route update profil Anda --}}
+                    <form action="{{ route('user.profile.update') }}" method="POST">
+                        @csrf
+                        @method('PUT')
+
+                        {{-- Nama --}}
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Nama Lengkap</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-0"><i class="bi bi-person"></i></span>
+                                <input type="text" name="name" class="form-control bg-white border-0" 
+                                       value="{{ Auth::user()->name }}" required>
                             </div>
                         </div>
-                    </div>
+
+                        {{-- Email --}}
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Alamat Email</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-0"><i class="bi bi-envelope"></i></span>
+                                <input type="email" name="email" class="form-control bg-white border-0" 
+                                       value="{{ Auth::user()->email }}" required>
+                            </div>
+                        </div>
+
+                        <hr class="my-4" style="border-top: 2px dashed #A37A00;">
+
+                        {{-- Password Baru --}}
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Password Baru <small class="text-muted fw-normal">(Opsional)</small></label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-0"><i class="bi bi-key"></i></span>
+                                <input type="password" name="password" class="form-control bg-white border-0" placeholder="Kosongkan jika tidak ingin mengubah">
+                            </div>
+                        </div>
+
+                        {{-- Konfirmasi Password --}}
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Konfirmasi Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-0"><i class="bi bi-key-fill"></i></span>
+                                <input type="password" name="password_confirmation" class="form-control bg-white border-0" placeholder="Ulangi password baru">
+                            </div>
+                        </div>
+
+                        {{-- Tombol Aksi --}}
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary fw-bold shadow-sm">
+                                <i class="bi bi-save me-2"></i> Simpan Perubahan
+                            </button>
+                            <a href="{{ route('home') }}" class="btn btn-outline-dark border-0">
+                                Kembali ke Beranda
+                            </a>
+                        </div>
+                    </form>
+                    {{-- Form Selesai --}}
+
                 </div>
             </div>
-
         </div>
     </div>
 </div>

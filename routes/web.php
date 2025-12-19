@@ -47,3 +47,18 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('pinjaman', PinjamanController::class);
 Route::resource('pengembalian', PengembalianController::class);
+Route::resource('roles', RoleController::class);
+Route::put('/admin/users/{user}/update-role', [AdminController::class, 'updateRole'])->name('admin.users.updateRole');
+Route::put('/pengembalian/{id}/upload', [PengembalianController::class, 'uploadBukti'])
+    ->name('pengembalian.uploadBukti');
+Route::patch('/admin/verifikasi-pembayaran/{id}', [AdminController::class, 'verifikasiPembayaran'])
+    ->name('admin.verifikasi_pembayaran');
+Route::get('/pinjaman/create/{id}', [PinjamanController::class, 'create'])->name('pinjaman.create');
+Route::get('/admin/export-dashboard', [AdminController::class, 'exportDashboard'])->name('admin.export');
+Route::middleware('auth')->group(function () {
+    // Route untuk menampilkan halaman (GET)
+    Route::get('/profil', [UserController::class, 'index'])->name('user.profile');
+    
+    // Route untuk memproses update (PUT)
+    Route::put('/profil/update', [UserController::class, 'updateProfile'])->name('user.profile.update');
+});

@@ -39,20 +39,26 @@
                         </li>
 
                         @auth
+                        @can('lihatpinjaman')
                         <li class="nav-item">
                             <a class="nav-link link-dark link-underline-opacity-0 link-underline-opacity-100-hover" href="{{route('pinjaman.dashboard')}}">
                                 <i class="bi bi-book"></i> Daftar Pinjaman
                             </a>
                         </li>
+                        @endcan
+                        @can('lihatriwayatpinjaman')
                         <li class="nav-item">
                             <a class="nav-link link-dark link-underline-opacity-0 link-underline-opacity-100-hover" href="{{ route('pengembalian.index') }}">
                                <i class="bi bi-clock-history"></i> Riwayat
                             </a>
                         </li>
+                        @endcan
+                            @can('lihatdashboardadmin')
                             <li class="nav-item">
                             <a class="nav-link link-dark link-underline-opacity-0 link-underline-opacity-100-hover" href="{{route('admin.dashboard')}}">
                                 Admin
                             </a>
+                            @endrole
                         </li>
                         
                         @endauth

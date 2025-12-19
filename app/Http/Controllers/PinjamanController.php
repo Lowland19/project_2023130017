@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Pinjaman;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Buku;
+use Illuminate\Support\Facades\Crypt;
 
 class PinjamanController extends Controller
 {
@@ -17,12 +18,16 @@ class PinjamanController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $pinjaman = Pinjaman::with('buku')->where('idPeminjam', $user->id)->get();
+        $pinjaman = Pinjaman::with('buku')
+            ->where('idPeminjam', $user->id) // Pastikan kolom ini ada di tabel pinjaman
+            ->doesntHave('pengembalian') 
+            ->get();
         return view('DaftarPinjam', compact('pinjaman'));
     }
 
-    public function create($id)
-    {
+    public function create($encrypted_id)
+    {   
+        $id = Crypt::decrypt($encrypted_id);
         $buku = Buku::find($id);
         return view('FormPinjam', compact('buku'));
     }

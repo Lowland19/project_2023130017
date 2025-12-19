@@ -19,11 +19,14 @@ class Pengembalian extends Model
         'totalKeterlambatan',
         'denda',
         'sudahDibayar',
+        'bukti_transfer',
+        'status_pembayaran'
     ];
 
     protected $primaryKey = 'id';
 
-    public function peminjaman() {
-        return $this->belongsTo(Pinjaman::class,'idPeminjaman','idPinjaman');
+    public function peminjaman()
+    {
+        return $this->belongsTo(Pinjaman::class, 'idPeminjaman', 'idPinjaman');
     }
 }

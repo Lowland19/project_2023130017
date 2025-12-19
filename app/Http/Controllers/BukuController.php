@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Buku;
-
+use Illuminate\Support\Facades\Crypt;
 class BukuController extends Controller
 {
     public function __construct()
@@ -32,7 +32,9 @@ class BukuController extends Controller
         return redirect()->route('buku.index')->with('success','Buku berhasil ditambahkan');
     }
 
-    public function edit(Buku $buku){
+    public function edit($encrypted_id){
+        $id = Crypt::decrypt($encrypted_id);
+        $buku = Buku::find($id);
         return view('FormEditBuku',compact('buku'));
     }
 
@@ -43,19 +45,20 @@ class BukuController extends Controller
             'penerbit' => 'required',
         ]);
         $buku->update($request->all());
-        return redirect()->route('buku.index')->with('success','Buku berhasil diubah');
+        return redirect()->route('admin.dashboard')->with('success', "Buku berhasil diubah!")->with('active_tab', 'daftar-buku-admin');
     }
 
     public function destroy(Buku $buku){
         $buku->delete();
-        return redirect()->route('buku.index')->with('success','Buku berhasil dihapus');
+        return redirect()->route('admin.dashboard')->with('success', "Buku berhasil dihapus!")->with('active_tab', 'daftar-buku-admin');
     }
 
     public function show(Buku $buku){
         return view('DetailBuku', compact('buku'));
     }
 
-    public function pinjam($id){
+    public function pinjam($encrypted_id){
+        $id = Crypt::decrypt($encrypted_id);
         $buku = Buku::findOrFail($id);
         return view('FormPinjam', compact('buku'));
     }

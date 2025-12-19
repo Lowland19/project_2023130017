@@ -26,7 +26,7 @@
                     <input type="checkbox" name="statusTersedia" id="statusTersedia" value="1" {{ $buku->statusTersedia ? 'checked' : '' }}>
                 </div>
                 <button type="submit" class="btn btn-success">Perbarui</button>
-                <a href="{{route('buku.index')}}" class="btn btn-secondary"><i class="bi bi-arrow-return-left"> Kembali </i></a>
+                <a href="{{route('admin.dashboard', ['tab' => 'perizinan'])}}" class="btn btn-secondary"><i class="bi bi-arrow-return-left"> Kembali </i></a>
             </form>
         </div>
     </div>
